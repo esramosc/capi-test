@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use App\Models\Address;
 use App\Models\Contact;
+use App\Models\Email;
 use App\Models\Phone;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::paginate();
+        $contacts = Contact::orderBy('id', 'desc')->paginate();
         return response()->json($contacts);
     }
 
@@ -26,16 +27,17 @@ class ContactsController extends Controller
                 'name' => $request->name
             ]
         );
+        // return response()->json($request->all());
         if (!$contact) {
             return response('No se pudo crear el contacto', 500);
         }
 
         if (isset($request->phones)) {
-            $phones = json_decode($request->phones);
+            $phones = $request->phones;
             foreach ($phones as $key => $phone) {
                 Phone::create(
                     [
-                        'phone' => $phone,
+                        'phone' => $phone['phone'],
                         'contact_id' => $contact->id
                     ]
                 );
@@ -43,11 +45,11 @@ class ContactsController extends Controller
         }
 
         if (isset($request->emails)) {
-            $emails = json_decode($request->emails);
+            $emails = $request->emails;
             foreach ($emails as $key => $email) {
-                Phone::create(
+                Email::create(
                     [
-                        'email' => $email,
+                        'email' => $email['email'],
                         'contact_id' => $contact->id
                     ]
                 );
@@ -55,18 +57,20 @@ class ContactsController extends Controller
         }
 
         if (isset($request->addresses)) {
-            $addresses = json_decode($request->addresses);
+            $addresses = $request->addresses;
             foreach ($addresses as $key => $address) {
                 Address::create(
                     [
-                        'state' => $address->state,
-                        'city' => $address->city,
-                        'address' => $address->address,
+                        'state' => $address['state'],
+                        'city' => $address['city'],
+                        'address' => $address['address'],
                         'contact_id' => $contact->id
                     ]
                 );
             }
         }
+
+        return response()->json($contact);
     }
 
     public function update(Request $request, $id)
@@ -81,6 +85,52 @@ class ContactsController extends Controller
                     'name' => $request->name
                 ]
             );
+
+        if (isset($request->phones)) {
+            $phones = $request->phones;
+            foreach ($phones as $key => $phone) {
+                Phone::create(
+                    [
+                        'phone' => $phone['phone'],
+                        'contact_id' => $contact->id
+                    ]
+                );
+            }
+        }
+
+        if (isset($request->emails)) {
+            $emails = $request->emails;
+            foreach ($emails as $key => $email) {
+                Email::create(
+                    [
+                        'email' => $email['email'],
+                        'contact_id' => $contact->id
+                    ]
+                );
+            }
+        }
+
+        if (isset($request->addresses)) {
+            $addresses = $request->addresses;
+            foreach ($addresses as $key => $address) {
+                Address::create(
+                    [
+                        'state' => $address['state'],
+                        'city' => $address['city'],
+                        'address' => $address['address'],
+                        'contact_id' => $contact->id
+                    ]
+                );
+            }
+        }
+
+        return response()->json($contact);
+    }
+
+    public function show($id) {
+        $contact = Contact::with(['phones', 'emails', 'addresses'])
+            ->where('id', $id)
+            ->first();
         return response()->json($contact);
     }
 
@@ -90,6 +140,9 @@ class ContactsController extends Controller
         if (!$contact) {
             return response('No se encontró el contacto', 500);
         }
+        $contact->phones()->delete();
+        $contact->emails()->delete();
+        $contact->addresses()->delete();
         $contact->delete();
         return response()->json($contact);
     }

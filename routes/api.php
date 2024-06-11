@@ -23,12 +23,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('contacts', ContactsController::class);
+Route::get('contacts/show/{id}', [ContactsController::class, 'show']);
 
 Route::post('phones', [PhoneController::class, 'store']);
-Route::post('phones/update/{id}', [PhoneController::class, 'update']);
+Route::put('phones/update/{id}', [PhoneController::class, 'update']);
+Route::delete('phones/delete/{id}', [PhoneController::class, 'destroy']);
 
 Route::post('emails', [EmailController::class, 'store']);
-Route::post('emails/update/{id}', [EmailController::class, 'update']);
+Route::put('emails/update/{id}', [EmailController::class, 'update']);
+Route::delete('emails/delete/{id}', [EmailController::class, 'destroy']);
 
 Route::post('addresses', [AddressController::class, 'store']);
-Route::post('addresses/update/{id}', [AddressController::class, 'update']);
+Route::put('addresses/update/{id}', [AddressController::class, 'update']);
+Route::delete('addresses/delete/{id}', [AddressController::class, 'destroy']);
