@@ -4,8 +4,10 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PhoneController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\FlareClient\Solutions\ReportSolution;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +38,5 @@ Route::delete('emails/delete/{id}', [EmailController::class, 'destroy']);
 Route::post('addresses', [AddressController::class, 'store']);
 Route::put('addresses/update/{id}', [AddressController::class, 'update']);
 Route::delete('addresses/delete/{id}', [AddressController::class, 'destroy']);
+
+Route::get('report', [ReportController::class, 'contactsByFilter']);
