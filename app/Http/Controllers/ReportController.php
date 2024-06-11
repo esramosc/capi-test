@@ -35,9 +35,7 @@ class ReportController extends Controller
             });
         }
 
-        if (isset($filters['with'])) {
-            $query->with($filters['with']);
-        }
+        $query->with(['phones', 'emails', 'addresses']);
 
         $contacts = $query->paginate(10); // Adjust page size as needed
 
