@@ -1,3 +1,8 @@
+## Requerimientos
+php 8
+
+laravel 10
+
 ## Instalación
 
 Para poder correr la aplicación de forma local en entorno de desarrollo, se debe crear una base de datos en MySql donde se almacenará la información.
@@ -18,6 +23,11 @@ DB_USERNAME=root
 
 DB_PASSWORD=
 
+## Instalar dependencias
+
+Ejecutar el siguiente comando en el root del proyecto:
+
+composer install
 
 ## Ejecutar migraciones y el seeder
 
