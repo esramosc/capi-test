@@ -25,7 +25,7 @@ Ejecutar el siguiente comando en el root del proyecto:
 
 php artisan migrate --seed
 
-Se crearan las tablas necesarias para la aplicación y se agregaran 5000 registros de contactos con 2 teléfonos, 2 emailsy 2 direcciones ficticias.
+Se crearan las tablas necesarias para la aplicación y se agregaran 5000 registros de contactos con 2 teléfonos, 2 emails y 2 direcciones ficticias para cada contacto.
 
 ## Correr la aplicación en el puerto 8000
 
