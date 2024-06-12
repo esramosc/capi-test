@@ -38,10 +38,15 @@ Esto hará accesible la aplicación en la dirección: http://localhost:8000/api
 Estarán disponibles los siguientes endpoints:
 
 contactos: 'contacts'
+
 Teléfonos: 'phones'
+
 Emails: 'emails'
+
 Direcciones: 'addresses'
+
 Reporte: 'report
+
 
 ## Soporte
 
